@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>Ungerboeck API Javascript Example</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <script>
+		//To enable CORS, you can run the web configuration utility.  The Ungerboeck API tab will have a checkbox to enable cors, along with an Allowed Origin URL white list field.
+		
+		//You can also directly modify the web.config file.
+		<!--   <appSettings> -->
+
+		<!--     <add key="AllowCORS" value="Y" /> -->
+		<!--     <add key="CORSAllowedOriginURLs" value="https://[originalsitedomain]" /> -->
+		<!--   </appSettings> -->
+
+		<!--    <security> -->
+		<!--       <requestFiltering allowDoubleEscaping="true"> -->
+		<!--        <verbs> -->
+		<!--           <add verb="OPTIONS" allowed="True" /> -->
+		<!--         </verbs> -->
+		<!--       </requestFiltering> -->
+		<!--     </security> -->
+		
+		//For the full instructions, check out our knowledgebase article:
+		//https://supportcenter.ungerboeck.com/hc/en-us/articles/360046108533-Ungerboeck-API-and-CORS
+ 
+		//To test CORS, run this on a site with a domain that differs from your v20 domain.
+        //var serviceUrl = 'https://localhost/ungerboeck/api/v1/';
+		var serviceUrl = 'https://mysite.ungerboeck.com/api/v1/'; //Current version (Starting in 20.94) will work
+		//var serviceUrl = 'https://mysite.ungerboeck.com/20_93/api/v1/'; //Past versions will result in a CORS exception
+        var accountCode = 'TEST';
+        var initializeEndpoint = 'SDK_Initialize';
+        var getAccountEndpoint = 'Accounts/10/' + accountCode;
+
+        function sendRequest() {
+            var method = "GET";
+
+            $.ajax({
+                type: method,
+                url: serviceUrl + initializeEndpoint,
+                headers: {
+                    'Authorization': 'Basic [this is the Base64 encoded string you send to the API in the form of userid:password]',
+                    'Content-Type': 'application/json'
+                }
+            }).done(function (data) {
+                GetAccount(data)
+            })
+        }
+
+        function GetAccount(data) {
+            var method = "GET";
+
+            $.ajax({
+                type: method,
+                url: serviceUrl + getAccountEndpoint,
+                headers: {
+                    'Token': data,
+                    'Content-Type': 'application/json'
+                }
+            }).done(function (account) {
+                $('#results').text(account.Name);
+            })
+        }
+
+    </script>
+</head>
+<body>
+<div>
+<h2>Basic Ungerboeck Javascript Get Account example</h2>
+<p>Modify the accountCode javascript variable</p>        
+<p>This is CORS compatible</p>
+<p>Inspect the javascript for better visibility</p>
+    <input type="button" value="Try it" onclick="sendRequest()" />
+    <div></div>
+    <span>Account Name:</span>
+    <span id='results'>(Result)</span>
+</div>
+</body>
+
+</html>
