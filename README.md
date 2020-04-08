@@ -22,4 +22,4 @@ You can also directly modify the web.config file.
 </security>
 ```
 
-For the full instructions, check out our [knowledgebase article](https://supportcenter.ungerboeck.com/hc/en-us/articles/360046108533-Ungerboeck-API-and-CORS)
+For the full instructions, check out our [knowledgebase article](https://supportcenter.ungerboeck.com/hc/en-us/articles/360046108533-Ungerboeck-API-and-CORS).
